@@ -1,0 +1,16 @@
+<view class="locate">
+  <van-cell-group border="{{false}}" title="当前地点">
+    <van-cell       title="{{address ? address: '获取中...' }}"  border="{{false}}">
+      <text     bind:tap="handleChooseLocationTap"  class="enjoy-icon icon-locate">重新定位</text>
+    </van-cell>
+  </van-cell-group>
+  <van-cell-group border="{{false}}" title="附近社区">
+    <van-cell 
+      wx:for="{{streetList}}" 
+      wx:key="id" 
+      title="{{item.title}}" 
+      url="/house_pkg/pages/building/index?street={{item.title}}" 
+      link-type="navigateTo" 
+      is-link />
+  </van-cell-group>
+</view>

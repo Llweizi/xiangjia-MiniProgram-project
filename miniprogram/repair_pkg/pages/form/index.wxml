@@ -1,0 +1,73 @@
+<!-- 表单信息 -->
+<scroll-view show-scrollbar="{{false}}" scroll-y>
+  <view class="form">
+    <van-cell-group border="{{false}}" title="报修房屋">
+      <van-cell
+      value="{{repairHouseName || '请选择报修房屋'}}"
+        value-class="{{repairHouseName ? 'active-cell': ''}}"
+        bind:click="openHouseLayer" is-link border="{{false}}" />
+    </van-cell-group>
+    <van-cell-group border="{{false}}" title="报修信息">
+      <van-cell
+        title="维修项目"
+        bind:click="openRepairLayer"
+        value="{{repairItemName || '请选择维修项目'}}"
+        value-class="{{repairItemName ? 'active-cell': ''}}" title-width="100" is-link />
+      <van-field title-width="88" label="手机号码" type="number"  model:value="{{mobile}}" placeholder="请输入联系电话号码" />
+      <van-cell
+        title="预约日期"
+        value="{{appointment || '请选择上门维修日期' }}"
+        value-class="{{appointment ? 'active-cell' : ''}}"
+        bind:click="openDateLayer"
+        title-width="100" is-link  />
+      <van-cell use-label-slot title="问题描述">
+        <van-field
+        model:value="{{description}}"
+          slot="label"
+          border="{{false}}" autosize custom-style="padding: 0; font-size: 28rpx; min-height: 60rpx" type="textarea" placeholder-style="color: #c3c3c5;" placeholder="请填写报修内容，工作人员将快速帮您解决问题。" />
+      </van-cell>
+      <van-cell use-label-slot custom-style="padding-bottom: 0" title="问题附件" border="{{false}}">
+        <view class="uploader" slot="label" style="margin-top: 20rpx;">
+          <van-uploader
+      file-list="{{ attachment }}"
+      bind:after-read="handleImageAfterRead"       max-count="5"
+      preview-size="100" />
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+</scroll-view>
+<!-- 提交报修按钮 -->
+<view class="toolbar" bind:tap="handleRepairSubmit">
+  <text class="enjoy-icon icon-repair"></text>
+  <text class="button-text">提交报修</text>
+</view>
+
+<!-- 底部的弹出菜单 -->
+<van-action-sheet
+  bind:close="closeHouseLayer"
+  bind:cancel="closeHouseLayer"
+  bind:select="handleRepairHouseSelect"
+  show="{{ isHouseLayerShow }}"
+  actions="{{ repairHouseList }}"
+  cancel-text="取消"
+  title="选择报修房屋" round />
+
+<van-action-sheet
+  bind:close="closeRepairLayer"
+  bind:cancel="closeRepairLayer"
+  bind:select="handleRepairItemSelect"
+  show="{{ isRepairLayerShow }}"
+  actions="{{ repairItemList }}"
+  cancel-text="取消"
+  title="选择维修项目" round />
+
+<van-popup
+  bind:close="closeDateLayer"
+  show="{{ isDateLayerShow }}"
+  position="bottom" round>
+  <van-datetime-picker type="date"  value="{{ currentDate }}"
+    min-date="{{ currentDate }}"
+    bind:cancel="handleDateCancel"
+    bind:confirm="handleDateConfirm" />
+</van-popup>

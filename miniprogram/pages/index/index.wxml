@@ -1,0 +1,41 @@
+<scroll-view scroll-y>
+  <view class="bg-wrap">
+    <!-- 功能导航 -->
+    <view class="navbar">
+  <!-- 将 navigator 标签替换为 view 标签 -->
+<view bind:tap="handleMyHouseTap">
+  <image class="nav-icon" src="/static/images/house_nav_icon@2x.png"></image>
+  <text class="nav-text">我的房屋</text>
+</view>
+<view bind:tap="handleRepairTap">
+        <image class="nav-icon" src="/static/images/repair_nav_icon@2x.png"></image>
+        <text class="nav-text">在线报修</text>
+      </view>
+      <view bind:tap="handleVisitorTap">
+    <image class="nav-icon" src="/static/images/visitor_nav_icon@2x.png"></image>
+    <text class="nav-text">访客邀请</text>
+  </view>
+    </view>
+    <!-- 公告图片 -->
+    <view class="banner">
+      <image src="/static/images/banner@2x.jpg"></image>
+    </view>
+  </view>
+  <!-- 公告信息 -->
+  <view class="notices">
+    <view class="notices-head">社区<text>公告</text></view>
+    <view class="notices-body">
+      <navigator
+        wx:for="{{ notifyList }}"
+        wx:key="id"
+        hover-class="none"
+        url="/pages/notify/index?id={{item.id}}" hover-class="none" class="notice">
+    
+      
+        <view class="notice-title">{{item.title}}</view>
+        <view class="notice-brief">{{item.content}}</view>
+        <view class="notice-date">{{item.createdAt}}</view>
+      </navigator>
+    </view>
+  </view>
+</scroll-view>

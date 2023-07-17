@@ -1,0 +1,11 @@
+<view class="building">
+  <van-cell-group border="{{false}}">
+    <van-cell
+      wx:for="{{size}}"
+      wx:key="*this"
+      title="{{street}}{{item+1}}{{type}}"
+      link-type="navigateTo"
+      url="/house_pkg/pages/room/index?street={{street}}&building={{index+1}}{{type}}"  is-link
+    />
+  </van-cell-group>
+</view>

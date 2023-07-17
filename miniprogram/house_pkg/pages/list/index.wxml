@@ -1,0 +1,42 @@
+<!-- block 模版占位标签页面上不会对应任何标签，类比vue中template里面写的template -->
+<block wx:if="{{true}}">
+  <scroll-view show-scrollbar="{{false}}" scroll-y>
+    <view class="houses">
+      <view class="houses-title">房屋信息</view>
+      <view class="houses-list">
+        <van-swipe-cell
+          wx:for="{{houseList}}"
+          wx:key="id"
+          mark:houseId="{{item.id}}"
+          async-close
+          bind:close="handleSwipeClose"
+          right-width="{{ 80 }}">
+          <van-cell-group mark:id="{{item.id}}" bind:tap="handleHouseItemClick" border="{{false}}">
+            <van-cell size="large" title="{{item.point}}">
+              <text wx:if="{{item.status === 1}}" class="tag info">审核中</text>
+              <text wx:if="{{item.status === 2}}" class="tag success">审核成功</text>
+              <text wx:if="{{item.status === 3}}" class="tag fail">审核失败</text>
+            </van-cell>
+            <van-cell title="房间号" border="{{false}}" value="{{item.building+item.room}}" />
+            <van-cell title="业主" border="{{false}}" value="{{item.name}}" />
+          </van-cell-group>
+          <view slot="right">
+            删除
+          </view>
+        </van-swipe-cell>
+
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="toolbar" bind:tap="addHouse">
+    <text class="enjoy-icon icon-add"></text>
+    <text class="button-text">添加新房屋</text>
+  </view>
+</block>
+
+<view wx:else class="blank">
+  您还没有认证房屋，请点击 <navigator hover-class="none" class="link" url=" ">添加</navigator>
+</view>
+
+<van-dialog message="是否删除已绑定房屋？" showCancelButton show="{{isDialogShow}}" cancel-button-color="#848484" confirm-button-color="#5591af" bind:close="handleDialogClose" />
